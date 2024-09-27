@@ -30,10 +30,24 @@ class CustomerResource extends Resource
             ->schema([
                 Section::make('Customer Information')
                     ->schema([
+
                         TextEntry::make('name')
                             ->size(TextEntry\TextEntrySize::Large)
-                            ->weight(FontWeight::Bold)
-                    ])
+                            ->weight(FontWeight::Bold),
+
+                        TextEntry::make('email')
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight(FontWeight::Bold),
+
+                        TextEntry::make('address')
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight(FontWeight::Bold),
+
+                        TextEntry::make('contact')
+                            ->size(TextEntry\TextEntrySize::Large)
+                            ->weight(FontWeight::Bold),
+
+                    ])->columns(2)
             ]);
     }
 
@@ -46,10 +60,12 @@ class CustomerResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required(),
                         Forms\Components\TextInput::make('email')
+                            ->disabledOn('edit')
                             ->email()
                             ->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('address'),
-                        Forms\Components\TextInput::make('contact'),
+                        Forms\Components\TextInput::make('contact')
+                            ->numeric(),
 
                     ])->columns(2)
             ]);
@@ -66,7 +82,8 @@ class CustomerResource extends Resource
                 TextColumn::make('email')
                     ->searchable(),
 
-                TextColumn::make('address'),
+                TextColumn::make('address')
+                    ->searchable(),
                 TextColumn::make('contact')
                     ->searchable(),
             ])
