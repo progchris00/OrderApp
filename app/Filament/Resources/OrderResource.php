@@ -21,7 +21,7 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box-arrow-down';
 
     public static function infolist(Infolist $infolist): Infolist
     {
@@ -48,6 +48,14 @@ class OrderResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
+
+                Forms\Components\Select::make('employee_id')
+                    ->label('Sales Representative')
+                    ->relationship('employee', 'name')
+                    ->searchable()
+                    ->preload()
+                    ,
+
                 Forms\Components\Repeater::make('items')
                     ->relationship('order_items')
                     ->schema([
@@ -63,7 +71,7 @@ class OrderResource extends Resource
                             ->numeric()
                             ->minValue(1)
                     ])->columns(2)->columnSpanFull()
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -78,6 +86,9 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('customer.email')
                     ->label('Email')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('employee.name')
+                    ->label('Sales Representative')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()

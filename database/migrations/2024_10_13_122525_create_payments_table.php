@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->date('order_date');
             $table->foreignId('customer_id', \App\Models\Customer::class);
-            $table->foreignId('employee_id', \App\Models\Employee::class)->nullable();
-            $table->string('status')->default('processing');
+            $table->string('reference_number')->unique();
+            $table->double('amount');
+            $table->dateTime('payment_date');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('payments');
     }
 };

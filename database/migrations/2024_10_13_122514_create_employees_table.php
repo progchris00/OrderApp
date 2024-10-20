@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->date('order_date');
-            $table->foreignId('customer_id', \App\Models\Customer::class);
-            $table->foreignId('employee_id', \App\Models\Employee::class)->nullable();
-            $table->string('status')->default('processing');
+            $table->string('name');
+            $table->foreignId('office_id', \App\Models\Office::class);
+            $table->foreignId('supervisor_id', \App\Models\Office::class)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('employees');
     }
 };

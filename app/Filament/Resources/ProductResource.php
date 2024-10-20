@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,7 +18,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
+
+    protected static ?string $navigationGroup = 'Item Management';
 
     public static function form(Form $form): Form
     {
@@ -41,6 +44,13 @@ class ProductResource extends Resource
                             ->preload()
                             ->multiple()
                             ->relationship('categories','name')
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->unique(ignoreRecord: true),
+                                TextInput::make('description'),
+                            ]),
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('product_photo')
 
                     ])->columns(2)
 
@@ -51,6 +61,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('product_photo')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('product_code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')

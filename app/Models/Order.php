@@ -16,12 +16,18 @@ class Order extends Model
     protected $fillable = [
         'order_date',
         'customer_id',
+        'employee_id',
         'status',
     ];
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class);
     }
 
     public function order_items(): HasMany

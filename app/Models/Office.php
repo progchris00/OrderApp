@@ -6,26 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Customer extends Model
+class Office extends Model
 {
+    /** @use HasFactory<\Database\Factories\OfficeFactory> */
     use HasFactory;
 
-    protected $table = 'customers';
+    protected $table = 'offices';
 
     protected $fillable = [
         'name',
-        'email',
-        'address',
+        'location',
         'contact',
     ];
 
-    public function orders(): HasMany
+    public function employees(): HasMany
     {
-        return $this->hasMany(Order::class);
-    }
-
-    public function payments(): HasMany
-    {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Employee::class);
     }
 }

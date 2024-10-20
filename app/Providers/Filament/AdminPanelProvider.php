@@ -26,6 +26,9 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth('full')
+//            ->topNavigation()
             ->login()
             ->colors([
                 'primary' => Color::Blue,

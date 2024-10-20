@@ -24,6 +24,8 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
 
+    protected static ?string $navigationGroup = 'Human Resources';
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -104,7 +106,8 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+           RelationManagers\OrdersRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class
         ];
     }
 
